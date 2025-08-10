@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import Layout from './components/layouts/Layout.vue';
 import Welcome from './components/pages/Welcome.vue';
+import Dashboard from './components/pages/Dashboard.vue';
 </script>
 
 <template>
-  <div>
-    <h1 class="text-gradient">Hello world</h1>
-  </div>
-  <Welcome>
-
-  </Welcome>
+  <Layout>
+    <Welcome />
+    <Dashboard />
+  </Layout>
+  
 </template>
 
 <style scoped>
