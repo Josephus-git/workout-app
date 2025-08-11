@@ -1,9 +1,15 @@
 <script setup lang="ts">
+
     import {ref, computed} from 'vue'
     import Portal from '../Portal.vue'
-    import { workoutProgram, exerciseDescriptions } from '../../utils'
-    const selectedWorkout = 4
-    const { workout, warmup } = workoutProgram[selectedWorkout]
+    import { workoutProgram, exerciseDescriptions, type Workout } from '../../utils'
+
+    const props = defineProps<{
+        data: Record<number, Record<string, string>>,
+        selectedWorkout: number
+    }>()
+
+    const { workout, warmup }: Workout = workoutProgram[props.selectedWorkout]
 
     let selectedExercise = ref<string | null>(null)
 

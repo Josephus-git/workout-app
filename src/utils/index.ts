@@ -1,4 +1,15 @@
-export const workoutProgram = {
+export interface Exercise {
+    name: string;
+    sets: number;
+    reps: number;
+}
+
+export interface Workout {
+    warmup: Exercise[];
+    workout: Exercise[];
+}
+
+export const workoutProgram: Record<number, Workout> = {
     0: {  // Push
         warmup: [
             { name: "Around the worlds", sets: 2, reps: 25 },
