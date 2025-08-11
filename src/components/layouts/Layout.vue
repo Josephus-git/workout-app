@@ -14,6 +14,7 @@
         <a href="https://github.com/Josephus-git/workout-app.git" target="_blank">
             <img alt="pfp" src="https://avatars.githubusercontent.com/u/200961794?v=4"/>
             <p>Josephus-git</p>
+            <i class="fa-brands fa-github"></i>
         </a>
     </footer>
 </template>
