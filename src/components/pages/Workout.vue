@@ -4,12 +4,16 @@
     import Portal from '../Portal.vue'
     import { workoutProgram, exerciseDescriptions, type Workout } from '../../utils'
 
-    const props = defineProps<{
+    const workoutType = ['Push', 'Pull', 'Legs']
+
+    const { data, selectedWorkout } = defineProps<{
+        handleSaveWorkout: () => void,
+        isWorkoutComplete: boolean,
         data: Record<number, Record<string, string>>,
         selectedWorkout: number
     }>()
 
-    const { workout, warmup }: Workout = workoutProgram[props.selectedWorkout]
+    const { workout, warmup }: Workout = workoutProgram[selectedWorkout]
 
     let selectedExercise = ref<string | null>(null)
 
@@ -38,10 +42,10 @@
     <section id="workout-card">
         <div class="plan-card card">
             <div class="plan-card-header">
-                <p>Day {{ selectedWorkout < 9 ? '0' + selectedWorkout : selectedWorkout }}</p>
+                <p>Day {{ selectedWorkout < 9 ? '0' + (selectedWorkout + 1) : (selectedWorkout + 1) }}</p>
                 <i class="fa-solid fa-dumbbell"></i>
             </div>
-            <h2>{{ 'Push' }} Workout</h2>
+            <h2>{{ workoutType[selectedWorkout % 3] }} Workout</h2>
         </div>
         <div class="workout-grid">
             <h4 class="grid-name">Warmup</h4>
@@ -73,12 +77,12 @@
                 </div>
                 <p>{{ w.sets }}</p>
                 <p>{{ w.reps }}</p>
-                <input class="grid-weights" placeholder="14kg" type="text"/>
+                <input v-model="data[selectedWorkout][w.name]" class="grid-weights" placeholder="14kg" type="text"/>
             </div>
         </div>
         <div class="card workout-btns">
-            <button>Save & Exit <i class="fa-solid fa-save"></i></button>
-            <button>Complete <i class="fa-solid fa-check"></i></button>
+            <button @click="handleSaveWorkout">Save & Exit <i class="fa-solid fa-save"></i></button>
+            <button :disabled="!isWorkoutComplete" @click="handleSaveWorkout">Complete <i class="fa-solid fa-check"></i></button>
         </div>
     </section>
 </template>
