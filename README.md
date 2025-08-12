@@ -45,12 +45,12 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/josephus-git/FrontEnd.git
+    git clone https://github.com/josephus-git/workout-app.git
     ```
 
 2.  **Navigate to the project directory:**
     ```sh
-    cd FrontEnd/workout-app
+    cd workout-app
     ```
 
 3.  **Install dependencies:**
