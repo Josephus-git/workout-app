@@ -118,6 +118,13 @@
         grid-column: span 7 / span 7;
     }
 
+    .workout-grid-line {
+        margin: 0.5rem 0;
+        height: 3px;
+        border-radius: 2px;
+        background: var(--background-muted);
+    }
+
     .grid-name {
         grid-column: span 3 / span 3;
         display: flex;

@@ -66,6 +66,13 @@
     selectedWorkout.value = -1
   }
 
+  function handleResetPlan() {
+    selectedDisplay.value = 2
+    selectedWorkout.value = -1
+    data.value = defaultData
+    localStorage.removeItem('workouts')
+  }
+
 </script>
 
 <template>
@@ -73,7 +80,7 @@
     <!-- Page 1 -->
     <Welcome :handleChangeDisplay="handleChangeDisplay" v-if="selectedDisplay ==  1" />
     <!-- Page 2 -->
-    <Dashboard :firstIncompleteWorkoutIndex="firstIncompleteWorkoutIndex" :handleSelectedWorkout="handleSelectedWorkout" v-if="selectedDisplay == 2 "/>
+    <Dashboard :handleResetPlan="handleResetPlan" :firstIncompleteWorkoutIndex="firstIncompleteWorkoutIndex" :handleSelectedWorkout="handleSelectedWorkout" v-if="selectedDisplay == 2 "/>
     <!-- Page 3 -->
     <Workout :handleSaveWorkout="handleSaveWorkout" :isWorkoutComplete="isWorkoutComplete" :data="data" :selected-workout="selectedWorkout" v-if="workoutProgram?.[selectedWorkout]"/>
   </Layout>

@@ -1,23 +1,45 @@
 <script setup lang="ts">
+    import { computed } from 'vue';
     import { workoutProgram } from '../utils'
     const workoutTypes = ['Push', 'Pull', 'Legs']
 
-    defineProps<{
-        handleSelectedWorkout: Function
-    }> ()
+    const props = defineProps<{
+        handleSelectedWorkout: (workoutIndex: number) => void,
+        firstIncompleteWorkoutIndex: number | undefined,
+        handleResetPlan: () => void
+    }> ();
+
+    const workoutIcons = ['fa-solid fa-dumbbell', 'fa-solid fa-weight-hanging', 'fa-solid fa-bolt'];
+
+    const isWorkoutDisabled = (workoutIndex: number): boolean => {
+        // Disable all if the state is not determined yet (e.g., loading)
+        if (props.firstIncompleteWorkoutIndex === undefined) {
+            return true;
+        }
+        // Enable all if all workouts are complete
+        if (props.firstIncompleteWorkoutIndex === -1) {
+            return false;
+        }
+        // Disable workouts that are after the first incomplete one
+        return workoutIndex > props.firstIncompleteWorkoutIndex;
+    }
+
+    const isResetDisabled = computed(() => props.firstIncompleteWorkoutIndex !== -1);
 
 </script>
 
 <template>
   <section id="grid">
-    <button disabled=true @click="() => handleSelectedWorkout(workoutIdx)" v-for="(workout, workoutIdx) in Object.keys(workoutProgram)" class="card-button plan-card">
+    <button :disabled="isWorkoutDisabled(workoutIdx)" @click="() => handleSelectedWorkout(workoutIdx)" v-for="(_, workoutIdx) in Object.keys(workoutProgram)" :key="workoutIdx" class="card-button plan-card">
         <div>
             <p>Day {{workoutIdx < 9 ? '0'+ (workoutIdx + 1) : workoutIdx + 1 }}</p>
-            <i class="fa-solid fa-dumbbell" v-if="workoutIdx%3 == 0"></i>
-            <i class="fa-solid fa-weight-hanging" v-if="workoutIdx%3 == 1"></i>
-            <i class="fa-solid fa-bolt" v-if="workoutIdx%3 == 2"></i>
+            <i :class="workoutIcons[workoutIdx%3]"></i>
         </div>
         <h3>{{ workoutTypes[workoutIdx%3] }}</h3>
+    </button>
+    <button :disabled="isResetDisabled" @click="handleResetPlan" class="card-button plan-card-reset">
+        <p>Reset</p>
+        <i class="fa-solid fa-rotate-left" > </i>
     </button>
   </section>
 </template>
@@ -41,6 +63,13 @@
     .plan-card {
         display: flex;
         flex-direction: column;
+    }
+
+    .plan-card-reset {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
     }
 
     .plan-card div {
