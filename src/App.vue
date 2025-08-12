@@ -4,7 +4,7 @@
   import Dashboard from './components/pages/Dashboard.vue';
   import Workout from './components/pages/Workout.vue';
 
-  import { computed, ref } from 'vue'
+  import { computed, ref, onMounted } from 'vue'
   import { workoutProgram } from './utils'
 
   const defaultData: Record<number, any> = {}
@@ -72,6 +72,17 @@
     data.value = defaultData
     localStorage.removeItem('workouts')
   }
+
+  onMounted(() => {
+    if (!localStorage) { return }
+    if (localStorage.getItem('workouts')) {
+      // only enter if we find some data stored in local storage
+      const savedData = JSON.parse(String(localStorage.getItem('workouts')))
+      data.value = savedData
+      selectedDisplay.value = 2 // if they have data, then we dont want then to be in welcome page
+    }
+
+  })
 
 </script>
 

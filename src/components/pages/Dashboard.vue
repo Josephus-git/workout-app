@@ -8,6 +8,7 @@
     const props = defineProps<{
         handleSelectedWorkout: (index: number) => void,
         firstIncompleteWorkoutIndex: number | undefined
+        handleResetPlan: () => void
     }> ();
 
 
