@@ -39,7 +39,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 ### Prerequisites
 
 - Node.js (v18 or newer recommended)
-- npm or yarn
+- npm
 
 ### Installation
 
